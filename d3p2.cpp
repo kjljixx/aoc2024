@@ -16,28 +16,26 @@ int main(){
     bool enabled = true;
     std::regex targetRgx("mul\\(\\d*,\\d*\\)|do\\(\\)|don't\\(\\)");
     std::string input;
-    std::ifstream inputFile("inputTest.txt");
+    std::ifstream inputFile("input.txt");
     std::getline(inputFile, input);
 
     std::smatch m;
     int ans = 0;
     while(std::regex_search(input, m, targetRgx)){
         // std::cout << "hi";
-        std::cout << std::string(m.prefix()) << std::endl;
-        input = m.suffix();
-        std::cout << m.str() << std::endl;
-        std::cout << input << std::endl;
+        // std::cout << std::string(m.prefix()) << std::endl;
+        // std::cout << m.str() << std::endl;
+        // std::cout << input << std::endl;
         if(m.str() == "don't()"){
             enabled = false;
-            continue;
         }
-        if(m.str() == "do()"){
+        else if(m.str() == "do()"){
             enabled = true;
-            continue;
         }
-        if(enabled){
+        else if(enabled){
             ans += multiplyFromStr(m.str());
         }
+        input = m.suffix();
         // std::cout << input;
     }
     std::cout << ans;
